@@ -7,7 +7,7 @@ const Form = (props) => {
     <Formik {...otherProps}>
       <FormikForm
         noValidate
-        className="flex flex-col justify-center items-center gap-5 mt-40">
+        className="flex flex-col justify-center items-center gap-5 mt-10">
         {children}
       </FormikForm>
     </Formik>
