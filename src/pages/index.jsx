@@ -1,3 +1,6 @@
+import { useMutation } from "@tanstack/react-query"
+
+import apiClient from "@/web/services/apiClient"
 import Form from "@/web/components/forms/Form"
 import FormField from "@/web/components/forms/FormField"
 import SubmitButton from "@/web/components/buttons/SubmitButton"
@@ -13,8 +16,13 @@ const initialValues = {
   link: ""
 }
 const Home = () => {
-  const handleSubmit = () => {
-    //
+  const { mutateAsync } = useMutation({
+    mutationFn: (values) => apiClient.post("/suggestions", { ...values })
+  })
+  const handleSubmit = async (values) => {
+    await mutateAsync(values)
+
+    return true
   }
 
   return (
