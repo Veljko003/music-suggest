@@ -19,9 +19,10 @@ const Home = () => {
   const { mutateAsync } = useMutation({
     mutationFn: (values) => apiClient.post("/suggestions", { ...values })
   })
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
     await mutateAsync(values)
 
+    resetForm()
     return true
   }
 
