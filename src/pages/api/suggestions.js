@@ -44,6 +44,16 @@ const handle = mw({
         })
       }
     }
+  ],
+  GET: [
+    async ({ res }) => {
+      const query = SuggestionModel.query()
+      const suggestions = await query.clone()
+
+      res.send({
+        result: suggestions
+      })
+    }
   ]
 })
 
