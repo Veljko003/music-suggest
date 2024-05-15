@@ -15,28 +15,21 @@ const SuggestionDisplayTable = ({ suggestions }) => (
   <table className="w-full mt-10">
     <thead>
       <tr>
-        {[
-          "#",
-          "Enseigne",
-          "Boutique",
-          "E-mail",
-          "Titre",
-          "Artiste",
-          "Lien"
-        ].map((label) => (
-          <th
-            key={label}
-            className="p-4 bg-slate-400 text-center font-semibold">
-            {label}
-          </th>
-        ))}
+        {["Enseigne", "Boutique", "E-mail", "Titre", "Artiste", "Lien"].map(
+          (label) => (
+            <th
+              key={label}
+              className="p-4 bg-slate-400 text-center font-semibold">
+              {label}
+            </th>
+          )
+        )}
       </tr>
     </thead>
     <tbody>
       {suggestions.map(
         ({ id, enseigne, shopName, email, title, artist, link }) => (
           <tr key={id} className="even:bg-green-100 text-center">
-            <td className="p-2">{id}</td>
             <td className="p-2">{enseigne}</td>
             <td className="p-2">{shopName}</td>
             <td className="p-2">{email}</td>
