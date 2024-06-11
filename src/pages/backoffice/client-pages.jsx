@@ -1,34 +1,74 @@
-import { useMutation } from "@tanstack/react-query"
+import { useQuery, useMutation } from "@tanstack/react-query"
 
 import apiClient from "@/web/services/apiClient"
-import Form from "@/web/components/forms/Form"
-import FormField from "@/web/components/forms/FormField"
-import SubmitButton from "@/web/components/buttons/SubmitButton"
 import Title from "@/web/components/Title"
-import ErrorMessage from "@/web/components/ErrorMessage"
+import Loader from "@/web/components/Loader"
+import Button from "@/web/components/buttons/Button"
 
-const initialValues = {
-  clientName: ""
+export const getServerSideProps = async () => {
+  const data = await apiClient("/clients")
+
+  return {
+    props: { initialData: data }
+  }
 }
-const CustomClientPages = () => {
-  const { mutateAsync, error } = useMutation({
-    mutationFn: (values) => apiClient.post("/clients", { ...values })
+const ClientsDisplayTable = ({ clients, handleDelete }) => (
+  <table className="w-full mt-10">
+    <thead>
+      <tr>
+        {["Client", "🗑️"].map((label) => (
+          <th
+            key={label}
+            className="p-4 bg-slate-300 text-center font-semibold">
+            {label}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {clients.map(({ id, clientName }) => (
+        <tr key={id} className="even:bg-green-100 text-center">
+          <td className="p-2">{clientName}</td>
+          <td className="p-2">
+            <Button
+              btnLabel="❌"
+              variant="styless"
+              data-id={id}
+              onClick={() => handleDelete(id)}
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+)
+const CustomClientPages = (props) => {
+  const { initialData } = props
+  const {
+    isFetching,
+    data: { result: clients },
+    refetch
+  } = useQuery({
+    queryKey: ["clients"],
+    queryFn: () => apiClient("/clients"),
+    initialData,
+    enabled: false
   })
-  const handleSubmit = async (values, { resetForm }) => {
-    await mutateAsync(values)
-
-    resetForm()
-    return true
+  const { mutateAsync: deleteClient } = useMutation({
+    mutationFn: (clientId) => apiClient.delete(`clients/${clientId}`)
+  })
+  const handleDelete = async (clientId) => {
+    await deleteClient(clientId)
+    await refetch()
   }
 
   return (
     <>
-      <Title title="Créer la page client personnalisées" />
-      <ErrorMessage error={error} />
-      <Form onSubmit={handleSubmit} initialValues={initialValues}>
-        <FormField name="clientName" type="text" label="Client:" />
-        <SubmitButton btnLabel="Créer la page client" onSubmit={handleSubmit} />
-      </Form>
+      <Title title="Clients" />
+      <div className="relative">
+        {isFetching && <Loader />}
+        <ClientsDisplayTable clients={clients} handleDelete={handleDelete} />
+      </div>
     </>
   )
 }

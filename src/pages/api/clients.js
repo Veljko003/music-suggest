@@ -6,6 +6,16 @@ import { HTTP_ERRORS } from "@/api/constants"
 import { UniqueViolationError } from "objection"
 
 const handle = mw({
+  GET: [
+    async ({ res }) => {
+      const query = ClientModel.query()
+      const clients = await query.clone()
+
+      res.send({
+        result: clients
+      })
+    }
+  ],
   POST: [
     validate({
       body: {
