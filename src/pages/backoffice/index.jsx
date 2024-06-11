@@ -13,7 +13,7 @@ const BackofficePage = () => (
       <CardMenu
         title="Pages client personnalisées"
         description="Créer et gérer des pages personnalisées pour différents clients."
-        link=""
+        link="/backoffice/client-pages"
       />
     </div>
   </div>

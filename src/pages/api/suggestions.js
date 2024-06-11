@@ -1,4 +1,4 @@
-import { string } from "yup"
+import { nameValidator } from "@/utils/validators"
 import mw from "@/api/mw"
 import { validate } from "@/api/middlewares/validate"
 import SuggestionModel from "@/db/models/SuggestionModel"
@@ -8,12 +8,12 @@ const handle = mw({
   POST: [
     validate({
       body: {
-        enseigne: string(),
-        shopName: string(),
-        email: string(),
-        title: string(),
-        artist: string(),
-        link: string()
+        enseigne: nameValidator,
+        shopName: nameValidator,
+        email: nameValidator,
+        title: nameValidator,
+        artist: nameValidator,
+        link: nameValidator
       }
     }),
     async ({
