@@ -3,6 +3,7 @@ import mw from "@/api/mw"
 import { validate } from "@/api/middlewares/validate"
 import ClientModel from "@/db/models/ClientModel"
 import { HTTP_ERRORS } from "@/api/constants"
+import { UniqueViolationError } from "objection"
 
 const handle = mw({
   POST: [
@@ -29,9 +30,16 @@ const handle = mw({
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Error creating client page:", error)
-        res.status(HTTP_ERRORS.INTERNAL_SERVER_ERROR).send({
-          error: "Internal Server Error"
-        })
+
+        if (error instanceof UniqueViolationError) {
+          res.status(HTTP_ERRORS.BAD_REQUEST).send({
+            error: "Client with that name already exists"
+          })
+        } else {
+          res.status(HTTP_ERRORS.INTERNAL_SERVER_ERROR).send({
+            error: "Internal Server Error"
+          })
+        }
       }
     }
   ]
