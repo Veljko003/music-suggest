@@ -1,8 +1,9 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useMutation } from "@tanstack/react-query"
 
 import apiClient from "@/web/services/apiClient"
 import Title from "@/web/components/Title"
 import Loader from "@/web/components/Loader"
+import Button from "@/web/components/buttons/Button"
 
 export const getServerSideProps = async () => {
   const data = await apiClient("/suggestions")
@@ -11,19 +12,25 @@ export const getServerSideProps = async () => {
     props: { initialData: data }
   }
 }
-const SuggestionDisplayTable = ({ suggestions }) => (
+const SuggestionDisplayTable = ({ suggestions, handleDelete }) => (
   <table className="w-full mt-10">
     <thead>
       <tr>
-        {["Enseigne", "Boutique", "E-mail", "Titre", "Artiste", "Lien"].map(
-          (label) => (
-            <th
-              key={label}
-              className="p-4 bg-slate-400 text-center font-semibold">
-              {label}
-            </th>
-          )
-        )}
+        {[
+          "Enseigne",
+          "Boutique",
+          "E-mail",
+          "Titre",
+          "Artiste",
+          "Lien",
+          "🗑️"
+        ].map((label) => (
+          <th
+            key={label}
+            className="p-4 bg-slate-300 text-center font-semibold">
+            {label}
+          </th>
+        ))}
       </tr>
     </thead>
     <tbody>
@@ -36,6 +43,13 @@ const SuggestionDisplayTable = ({ suggestions }) => (
             <td className="p-2">{title}</td>
             <td className="p-2">{artist}</td>
             <td className="p-2">{link}</td>
+            <td className="p-2">
+              <Button
+                btnLabel="Supprimer"
+                data-id={id}
+                onClick={() => handleDelete(id)}
+              />
+            </td>
           </tr>
         )
       )}
@@ -46,20 +60,32 @@ const Suggestions = (props) => {
   const { initialData } = props
   const {
     isFetching,
-    data: { result: suggestions }
+    data: { result: suggestions },
+    refetch
   } = useQuery({
     queryKey: ["suggestions"],
     queryFn: () => apiClient("/suggestions"),
     initialData,
     enabled: false
   })
+  const { mutateAsync: deleteSuggestion } = useMutation({
+    mutationFn: (suggestionId) =>
+      apiClient.delete(`suggestions/${suggestionId}`)
+  })
+  const handleDelete = async (suggestionId) => {
+    await deleteSuggestion(suggestionId)
+    await refetch()
+  }
 
   return (
     <>
       <Title title="Suggestions" />
       <div className="relative">
         {isFetching && <Loader />}
-        <SuggestionDisplayTable suggestions={suggestions} />
+        <SuggestionDisplayTable
+          suggestions={suggestions}
+          handleDelete={handleDelete}
+        />
       </div>
     </>
   )
