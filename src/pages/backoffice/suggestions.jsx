@@ -57,7 +57,8 @@ const SuggestionDisplayTable = ({ suggestions, handleDelete }) => (
             <td className="p-2">{formatDateTimeShort(new Date(created_at))}</td>
             <td className="p-2">
               <Button
-                btnLabel="Supprimer"
+                btnLabel="❌"
+                variant="styless"
                 data-id={id}
                 onClick={() => handleDelete(id)}
               />
