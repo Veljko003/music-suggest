@@ -4,6 +4,7 @@ import apiClient from "@/web/services/apiClient"
 import Title from "@/web/components/Title"
 import Loader from "@/web/components/Loader"
 import Button from "@/web/components/buttons/Button"
+import { formatDateTimeShort } from "@/utils/formatters"
 
 export const getServerSideProps = async () => {
   const data = await apiClient("/suggestions")
@@ -23,6 +24,7 @@ const SuggestionDisplayTable = ({ suggestions, handleDelete }) => (
           "Titre",
           "Artiste",
           "Lien",
+          "Date/Heure",
           "🗑️"
         ].map((label) => (
           <th
@@ -35,7 +37,16 @@ const SuggestionDisplayTable = ({ suggestions, handleDelete }) => (
     </thead>
     <tbody>
       {suggestions.map(
-        ({ id, enseigne, shopName, email, title, artist, link }) => (
+        ({
+          id,
+          enseigne,
+          shopName,
+          email,
+          title,
+          artist,
+          link,
+          created_at
+        }) => (
           <tr key={id} className="even:bg-green-100 text-center">
             <td className="p-2">{enseigne}</td>
             <td className="p-2">{shopName}</td>
@@ -43,6 +54,7 @@ const SuggestionDisplayTable = ({ suggestions, handleDelete }) => (
             <td className="p-2">{title}</td>
             <td className="p-2">{artist}</td>
             <td className="p-2">{link}</td>
+            <td className="p-2">{formatDateTimeShort(new Date(created_at))}</td>
             <td className="p-2">
               <Button
                 btnLabel="Supprimer"

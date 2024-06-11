@@ -1,13 +1,13 @@
 import mw from "@/api/mw"
-import { number } from "yup"
 import { validate } from "@/api/middlewares/validate"
 import SuggestionModel from "@/db/models/SuggestionModel"
+import { idValidator } from "@/utils/validators"
 
 const handle = mw({
   DELETE: [
     validate({
       query: {
-        suggestionId: number().integer()
+        suggestionId: idValidator
       }
     }),
     async ({
