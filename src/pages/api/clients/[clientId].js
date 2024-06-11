@@ -24,6 +24,25 @@ const handle = mw({
 
       res.send(client)
     }
+  ],
+  GET: [
+    validate({
+      query: {
+        clientId: idValidator
+      }
+    }),
+    async ({
+      input: {
+        query: { clientId }
+      },
+      res
+    }) => {
+      const client = await ClientModel.query()
+        .findById(clientId)
+        .throwIfNotFound()
+
+      res.send(client)
+    }
   ]
 })
 
