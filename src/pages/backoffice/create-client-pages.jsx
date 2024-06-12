@@ -8,7 +8,8 @@ import Title from "@/web/components/Title"
 import ErrorMessage from "@/web/components/ErrorMessage"
 
 const initialValues = {
-  clientName: ""
+  clientName: "",
+  backgroundColor: ""
 }
 const CreateCustomClientPages = () => {
   const { mutateAsync, error } = useMutation({
@@ -27,6 +28,7 @@ const CreateCustomClientPages = () => {
       <ErrorMessage error={error} />
       <Form onSubmit={handleSubmit} initialValues={initialValues}>
         <FormField name="clientName" type="text" label="Client:" />
+        <FormField name="backgroundColor" type="color" label="Fond d'écran:" />
         <SubmitButton btnLabel="Créer la page client" onSubmit={handleSubmit} />
       </Form>
     </>

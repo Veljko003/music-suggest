@@ -19,18 +19,20 @@ const handle = mw({
   POST: [
     validate({
       body: {
-        clientName: nameValidator
+        clientName: nameValidator,
+        backgroundColor: nameValidator
       }
     }),
     async ({
       res,
       input: {
-        body: { clientName }
+        body: { clientName, backgroundColor }
       }
     }) => {
       try {
         const client = await ClientModel.query().insert({
-          clientName
+          clientName,
+          backgroundColor
         })
 
         res.send({

@@ -21,7 +21,7 @@ const ClientsDisplayTable = ({
   <table className="w-full mt-10">
     <thead>
       <tr>
-        {["Client", "Page", "🗑️"].map((label) => (
+        {["Client", "Fond d'écran", "Page", "🗑️"].map((label) => (
           <th
             key={label}
             className="p-4 bg-slate-300 text-center font-semibold">
@@ -31,9 +31,10 @@ const ClientsDisplayTable = ({
       </tr>
     </thead>
     <tbody>
-      {clients.map(({ id, clientName }) => (
+      {clients.map(({ id, clientName, backgroundColor }) => (
         <tr key={id} className="even:bg-green-100 text-center">
           <td className="p-2">{clientName}</td>
+          <td className="p-2">{backgroundColor}</td>
           <td className="p-2">
             <Button
               btnLabel="Voir la page"
