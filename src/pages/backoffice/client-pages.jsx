@@ -46,7 +46,7 @@ const ClientsDisplayTable = ({
               btnLabel="❌"
               variant="styless"
               data-id={id}
-              onClick={() => handleDelete(id)}
+              onClick={() => handleDelete(clientName)}
             />
           </td>
         </tr>
@@ -68,13 +68,13 @@ const CustomClientPages = (props) => {
     enabled: false
   })
   const { mutateAsync: deleteClient } = useMutation({
-    mutationFn: (clientId) => apiClient.delete(`clients/${clientId}`)
+    mutationFn: (clientName) => apiClient.delete(`clients/${clientName}`)
   })
   const handleClickViewPage = (clientName) => () => {
     router.push(`/${clientName}`)
   }
-  const handleDelete = async (clientId) => {
-    await deleteClient(clientId)
+  const handleDelete = async (clientName) => {
+    await deleteClient(clientName)
     await refetch()
   }
 

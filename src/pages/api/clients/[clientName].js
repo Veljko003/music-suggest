@@ -1,23 +1,23 @@
 import mw from "@/api/mw"
 import { validate } from "@/api/middlewares/validate"
 import ClientModel from "@/db/models/ClientModel"
-import { idValidator } from "@/utils/validators"
+import { nameValidator } from "@/utils/validators"
 
 const handle = mw({
   DELETE: [
     validate({
       query: {
-        clientId: idValidator
+        clientName: nameValidator
       }
     }),
     async ({
       input: {
-        query: { clientId }
+        query: { clientName }
       },
       res
     }) => {
       const client = await ClientModel.query()
-        .findById(clientId)
+        .findOne({ clientName })
         .throwIfNotFound()
 
       await client.$query().delete()
@@ -28,17 +28,17 @@ const handle = mw({
   GET: [
     validate({
       query: {
-        clientId: idValidator
+        clientName: nameValidator
       }
     }),
     async ({
       input: {
-        query: { clientId }
+        query: { clientName }
       },
       res
     }) => {
       const client = await ClientModel.query()
-        .findById(clientId)
+        .findOne({ clientName })
         .throwIfNotFound()
 
       res.send(client)
