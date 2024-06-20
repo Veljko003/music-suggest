@@ -1,9 +1,11 @@
 import { useQuery, useMutation } from "@tanstack/react-query"
+import { useState } from "react"
 
 import apiClient from "@/web/services/apiClient"
 import Title from "@/web/components/Title"
 import Loader from "@/web/components/Loader"
 import Button from "@/web/components/buttons/Button"
+import ConfirmationModal from "@/web/components/ConfirmationModal"
 import { formatDateTimeShort } from "@/utils/formatters"
 
 export const getServerSideProps = async () => {
@@ -13,6 +15,7 @@ export const getServerSideProps = async () => {
     props: { initialData: data }
   }
 }
+
 const SuggestionDisplayTable = ({ suggestions, handleDelete }) => (
   <table className="w-full mt-10">
     <thead>
@@ -36,16 +39,7 @@ const SuggestionDisplayTable = ({ suggestions, handleDelete }) => (
     </thead>
     <tbody>
       {suggestions.map(
-        ({
-          id,
-          enseigne,
-          shopName,
-          email,
-          title,
-          artist,
-          link,
-          created_at
-        }) => (
+        ({ id, shopName, email, title, artist, link, created_at }) => (
           <tr key={id} className="even:bg-green-100 text-center">
             <td className="p-2">{shopName}</td>
             <td className="p-2">{email}</td>
@@ -67,8 +61,12 @@ const SuggestionDisplayTable = ({ suggestions, handleDelete }) => (
     </tbody>
   </table>
 )
+
 const Suggestions = (props) => {
   const { initialData } = props
+  const [showConfirmation, setShowConfirmation] = useState(false)
+  const [suggestionToDelete, setSuggestionToDelete] = useState(null)
+
   const {
     isFetching,
     data: { result: suggestions },
@@ -79,13 +77,29 @@ const Suggestions = (props) => {
     initialData,
     enabled: false
   })
+
   const { mutateAsync: deleteSuggestion } = useMutation({
     mutationFn: (suggestionId) =>
       apiClient.delete(`suggestions/${suggestionId}`)
   })
-  const handleDelete = async (suggestionId) => {
-    await deleteSuggestion(suggestionId)
-    await refetch()
+
+  const handleDelete = (suggestionId) => {
+    setSuggestionToDelete(suggestionId)
+    setShowConfirmation(true)
+  }
+
+  const confirmDelete = async () => {
+    setShowConfirmation(false)
+
+    if (suggestionToDelete) {
+      await deleteSuggestion(suggestionToDelete)
+      await refetch()
+    }
+  }
+
+  const handleCloseConfirmation = () => {
+    setShowConfirmation(false)
+    setSuggestionToDelete(null)
   }
 
   return (
@@ -98,6 +112,12 @@ const Suggestions = (props) => {
           handleDelete={handleDelete}
         />
       </div>
+      <ConfirmationModal
+        show={showConfirmation}
+        onClose={handleCloseConfirmation}
+        onConfirm={confirmDelete}
+        warningMessageHead="Etes-vous sûr de vouloir supprimer cette suggestion?"
+      />
     </>
   )
 }

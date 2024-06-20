@@ -1,10 +1,12 @@
 import { useQuery, useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/router"
+import { useState } from "react"
 
 import apiClient from "@/web/services/apiClient"
 import Title from "@/web/components/Title"
 import Loader from "@/web/components/Loader"
 import Button from "@/web/components/buttons/Button"
+import ConfirmationModal from "@/web/components/ConfirmationModal"
 
 export const getServerSideProps = async () => {
   const data = await apiClient("/clients")
@@ -13,6 +15,7 @@ export const getServerSideProps = async () => {
     props: { initialData: data }
   }
 }
+
 const ClientsDisplayTable = ({
   clients,
   handleClickViewPage,
@@ -54,8 +57,11 @@ const ClientsDisplayTable = ({
     </tbody>
   </table>
 )
+
 const CustomClientPages = (props) => {
   const router = useRouter()
+  const [showConfirmation, setShowConfirmation] = useState(false)
+  const [clientToDelete, setClientToDelete] = useState(null)
   const { initialData } = props
   const {
     isFetching,
@@ -73,9 +79,21 @@ const CustomClientPages = (props) => {
   const handleClickViewPage = (clientName) => () => {
     router.push(`/${clientName}`)
   }
-  const handleDelete = async (clientName) => {
-    await deleteClient(clientName)
-    await refetch()
+  const handleDelete = (clientName) => {
+    setClientToDelete(clientName)
+    setShowConfirmation(true)
+  }
+  const confirmDelete = async () => {
+    setShowConfirmation(false)
+
+    if (clientToDelete) {
+      await deleteClient(clientToDelete)
+      await refetch()
+    }
+  }
+  const handleCloseConfirmation = () => {
+    setShowConfirmation(false)
+    setClientToDelete(null)
   }
 
   return (
@@ -89,6 +107,12 @@ const CustomClientPages = (props) => {
           handleDelete={handleDelete}
         />
       </div>
+      <ConfirmationModal
+        show={showConfirmation}
+        onClose={handleCloseConfirmation}
+        onConfirm={confirmDelete}
+        warningMessageHead="Etes-vous sûr de vouloir supprimer cette page?"
+      />
     </>
   )
 }
