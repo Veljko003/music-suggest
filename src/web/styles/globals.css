@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "MidiAgencyFont";
+  src: url("/fonts/Apercu_Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   background-color: #c9daf8;
+  font-family: "MidiAgencyFont", sans-serif;
 }
