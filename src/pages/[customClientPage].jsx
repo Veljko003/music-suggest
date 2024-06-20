@@ -32,7 +32,7 @@ const ClientPage = () => {
     <>
       <Title title="A votre tour de nous suggérer un titre" />
       <Form onSubmit={handleSubmit} initialValues={initialValues}>
-        <FormField name="shopName" type="text" label="Boutique:" />
+        <FormField name="shopName" type="text" label="Boutique / Espace:" />
         <FormField
           name="email"
           type="email"

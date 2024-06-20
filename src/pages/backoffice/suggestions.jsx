@@ -21,7 +21,7 @@ const SuggestionDisplayTable = ({ suggestions, handleDelete }) => (
     <thead>
       <tr>
         {[
-          "Boutique",
+          "Boutique / Espace",
           "E-mail",
           "Titre",
           "Artiste",
