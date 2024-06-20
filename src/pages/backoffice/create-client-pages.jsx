@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
+import { useRouter } from "next/router"
 
 import apiClient from "@/web/services/apiClient"
 import Form from "@/web/components/forms/Form"
@@ -12,6 +13,7 @@ const initialValues = {
   backgroundColor: ""
 }
 const CreateCustomClientPages = () => {
+  const router = useRouter()
   const { mutateAsync, error } = useMutation({
     mutationFn: (values) => apiClient.post("/clients", { ...values })
   })
@@ -19,6 +21,7 @@ const CreateCustomClientPages = () => {
     await mutateAsync(values)
 
     resetForm()
+    router.push("/backoffice/client-pages")
     return true
   }
 

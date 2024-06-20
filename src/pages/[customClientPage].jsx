@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
+import { useRouter } from "next/router"
 
 import apiClient from "@/web/services/apiClient"
 import Form from "@/web/components/forms/Form"
@@ -15,6 +16,7 @@ const initialValues = {
   link: ""
 }
 const ClientPage = () => {
+  const router = useRouter()
   const { mutateAsync } = useMutation({
     mutationFn: (values) => apiClient.post("/suggestions", { ...values })
   })
@@ -22,6 +24,7 @@ const ClientPage = () => {
     await mutateAsync(values)
 
     resetForm()
+    router.push("/thanks")
     return true
   }
 
