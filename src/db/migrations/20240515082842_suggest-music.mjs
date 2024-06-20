@@ -1,7 +1,6 @@
 export const up = async (knex) => {
   await knex.schema.createTable("suggestions", (table) => {
     table.increments("id")
-    table.text("enseigne").notNullable()
     table.text("shopName").notNullable()
     table.text("email").notNullable()
     table.text("title").notNullable()

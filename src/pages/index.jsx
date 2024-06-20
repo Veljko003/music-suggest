@@ -8,7 +8,6 @@ import LinkField from "@/web/components/forms/LinkField"
 import Title from "@/web/components/Title"
 
 const initialValues = {
-  enseigne: "",
   shopName: "",
   email: "",
   title: "",
@@ -30,7 +29,6 @@ const Home = () => {
     <>
       <Title title="A votre tour de nous suggérer un titre" />
       <Form onSubmit={handleSubmit} initialValues={initialValues}>
-        <FormField name="enseigne" type="text" label="Enseigne:" />
         <FormField name="shopName" type="text" label="Boutique:" />
         <FormField
           name="email"

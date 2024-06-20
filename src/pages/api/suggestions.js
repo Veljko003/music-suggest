@@ -8,7 +8,6 @@ const handle = mw({
   POST: [
     validate({
       body: {
-        enseigne: nameValidator,
         shopName: nameValidator,
         email: nameValidator,
         title: nameValidator,
@@ -19,12 +18,11 @@ const handle = mw({
     async ({
       res,
       input: {
-        body: { enseigne, shopName, email, title, artist, link }
+        body: { shopName, email, title, artist, link }
       }
     }) => {
       try {
         const suggestion = await SuggestionModel.query().insert({
-          enseigne,
           shopName,
           email,
           title,

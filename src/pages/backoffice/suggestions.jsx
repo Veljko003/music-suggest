@@ -18,7 +18,6 @@ const SuggestionDisplayTable = ({ suggestions, handleDelete }) => (
     <thead>
       <tr>
         {[
-          "Enseigne",
           "Boutique",
           "E-mail",
           "Titre",
@@ -48,7 +47,6 @@ const SuggestionDisplayTable = ({ suggestions, handleDelete }) => (
           created_at
         }) => (
           <tr key={id} className="even:bg-green-100 text-center">
-            <td className="p-2">{enseigne}</td>
             <td className="p-2">{shopName}</td>
             <td className="p-2">{email}</td>
             <td className="p-2">{title}</td>
