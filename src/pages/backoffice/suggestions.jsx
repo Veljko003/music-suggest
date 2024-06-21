@@ -61,12 +61,10 @@ const SuggestionDisplayTable = ({ suggestions, handleDelete }) => (
     </tbody>
   </table>
 )
-
 const Suggestions = (props) => {
   const { initialData } = props
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [suggestionToDelete, setSuggestionToDelete] = useState(null)
-
   const {
     isFetching,
     data: { result: suggestions },
@@ -77,17 +75,14 @@ const Suggestions = (props) => {
     initialData,
     enabled: false
   })
-
   const { mutateAsync: deleteSuggestion } = useMutation({
     mutationFn: (suggestionId) =>
       apiClient.delete(`suggestions/${suggestionId}`)
   })
-
   const handleDelete = (suggestionId) => {
     setSuggestionToDelete(suggestionId)
     setShowConfirmation(true)
   }
-
   const confirmDelete = async () => {
     setShowConfirmation(false)
 
@@ -96,7 +91,6 @@ const Suggestions = (props) => {
       await refetch()
     }
   }
-
   const handleCloseConfirmation = () => {
     setShowConfirmation(false)
     setSuggestionToDelete(null)

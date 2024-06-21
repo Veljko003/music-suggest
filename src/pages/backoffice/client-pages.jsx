@@ -57,7 +57,6 @@ const ClientsDisplayTable = ({
     </tbody>
   </table>
 )
-
 const CustomClientPages = (props) => {
   const router = useRouter()
   const [showConfirmation, setShowConfirmation] = useState(false)
