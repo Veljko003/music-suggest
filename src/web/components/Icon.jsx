@@ -1,9 +1,14 @@
 import clsx from "clsx"
-import { ExclamationCircleIcon, LinkIcon } from "@heroicons/react/24/solid"
+import {
+  ExclamationCircleIcon,
+  LinkIcon,
+  CheckCircleIcon
+} from "@heroicons/react/24/solid"
 
 const icons = {
   danger: ExclamationCircleIcon,
-  link: LinkIcon
+  link: LinkIcon,
+  success: CheckCircleIcon
 }
 const Icon = (props) => {
   const { icon = "", className, ...otherProps } = props
