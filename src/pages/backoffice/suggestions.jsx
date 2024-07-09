@@ -9,6 +9,7 @@ import ConfirmationModal from "@/web/components/ConfirmationModal"
 import { formatDateTimeShort } from "@/utils/formatters"
 import SortSelect from "@/web/components/SortSelect"
 import { getSortedSuggestions } from "@/utils/sort"
+import RefreshButton from "@/web/components/buttons/RefreshButton"
 
 export const getServerSideProps = async () => {
   const data = await apiClient("/suggestions")
@@ -111,6 +112,7 @@ const Suggestions = (props) => {
       <Title title="Suggestions" />
       <div className="flex flex-row justify-center mt-5">
         <SortSelect value={sortOption} onChange={handleSortChange} />
+        <RefreshButton refresh={refetch} />
       </div>
       <div className="relative">
         {isFetching && <Loader />}

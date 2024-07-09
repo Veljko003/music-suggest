@@ -3,7 +3,7 @@ import clsx from "clsx"
 const SortSelect = ({ className, value, onChange }) => (
   <select
     className={clsx(
-      "text-md appearance-none bg-transparent border border-stone-700 rounded py-[12px] px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 hover:cursor-pointer",
+      "text-md text-center appearance-none bg-transparent border border-stone-700 rounded py-[12px] px-3 text-gray-700 leading-tight focus:outline-none focus:border-indigo-500 hover:cursor-pointer",
       className
     )}
     value={value}

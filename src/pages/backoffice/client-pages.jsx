@@ -9,6 +9,7 @@ import Button from "@/web/components/buttons/Button"
 import ConfirmationModal from "@/web/components/ConfirmationModal"
 import SortSelect from "@/web/components/SortSelect"
 import { getSortedClients } from "@/utils/sort"
+import RefreshButton from "@/web/components/buttons/RefreshButton"
 
 export const getServerSideProps = async () => {
   const data = await apiClient("/clients")
@@ -110,6 +111,7 @@ const CustomClientPages = (props) => {
       <Title title="Clients" />
       <div className="flex flex-row justify-center mt-5">
         <SortSelect value={sortOption} onChange={handleSortChange} />
+        <RefreshButton refresh={refetch} />
       </div>
       <div className="relative">
         {isFetching && <Loader />}
