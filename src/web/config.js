@@ -1,4 +1,4 @@
-import { number, object, string } from "yup"
+import { object, string } from "yup"
 
 const validationSchema = object({
   api: object({

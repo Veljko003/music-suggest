@@ -1,4 +1,4 @@
-import { boolean, number, object, string } from "yup"
+import { object, string } from "yup"
 
 const validationSchema = object({
   db: object({
