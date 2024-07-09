@@ -10,6 +10,8 @@ import { formatDateTimeShort } from "@/utils/formatters"
 import SortSelect from "@/web/components/SortSelect"
 import { getSortedSuggestions } from "@/utils/sort"
 import RefreshButton from "@/web/components/buttons/RefreshButton"
+import FilterMenu from "@/web/components/FilterMenu"
+import Icon from "@/web/components/Icon"
 
 export const getServerSideProps = async () => {
   const data = await apiClient("/suggestions")
@@ -70,6 +72,8 @@ const Suggestions = (props) => {
   const { initialData } = props
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [suggestionToDelete, setSuggestionToDelete] = useState(null)
+  const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
+  const [selectedClients, setSelectedClients] = useState([])
   const [sortOption, setSortOption] = useState("")
   const {
     isFetching,
@@ -105,21 +109,56 @@ const Suggestions = (props) => {
     () => getSortedSuggestions(suggestions, sortOption),
     [suggestions, sortOption]
   )
+  const filteredSuggestions = useMemo(
+    () =>
+      sortedSuggestions.filter(
+        (suggestion) =>
+          selectedClients.length === 0 ||
+          selectedClients.includes(suggestion.client)
+      ),
+    [sortedSuggestions, selectedClients]
+  )
   const handleSortChange = (e) => {
     setSortOption(e.target.value)
   }
+  const onClickFilter = () => {
+    setIsFilterMenuOpen(!isFilterMenuOpen)
+  }
+  const closeFilterMenu = () => {
+    setIsFilterMenuOpen(false)
+  }
+  const handleApplyFilters = (clients) => {
+    setSelectedClients(clients)
+    closeFilterMenu()
+  }
+  const uniqueClients = [
+    ...new Set(suggestions.map((suggestion) => suggestion.client))
+  ]
 
   return (
     <>
       <Title title="Suggestions" />
       <div className="flex flex-row justify-center mt-5">
+        <Button
+          onClick={onClickFilter}
+          btnLabel={<Icon icon="filter" className="h-7 w-7" />}
+          variant="styless"
+        />
+        <FilterMenu
+          isOpen={isFilterMenuOpen}
+          onClose={closeFilterMenu}
+          clients={uniqueClients}
+          selectedClients={selectedClients}
+          setSelectedClients={setSelectedClients}
+          handleApplyFilters={handleApplyFilters}
+        />
         <SortSelect value={sortOption} onChange={handleSortChange} />
         <RefreshButton refresh={refetch} />
       </div>
       <div className="relative">
         {isFetching && <Loader />}
         <SuggestionDisplayTable
-          suggestions={sortedSuggestions}
+          suggestions={filteredSuggestions}
           handleDelete={handleDelete}
         />
       </div>
