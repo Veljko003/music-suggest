@@ -110,7 +110,11 @@ const CustomClientPages = (props) => {
     <>
       <Title title="Clients" />
       <div className="flex flex-row justify-center mt-5">
-        <SortSelect value={sortOption} onChange={handleSortChange} />
+        <SortSelect
+          value={sortOption}
+          onChange={handleSortChange}
+          nameSort="Nom"
+        />
         <RefreshButton refresh={refetch} />
       </div>
       <div className="relative">

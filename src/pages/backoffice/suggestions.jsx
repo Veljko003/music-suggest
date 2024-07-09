@@ -152,7 +152,11 @@ const Suggestions = (props) => {
           setSelectedClients={setSelectedClients}
           handleApplyFilters={handleApplyFilters}
         />
-        <SortSelect value={sortOption} onChange={handleSortChange} />
+        <SortSelect
+          value={sortOption}
+          onChange={handleSortChange}
+          nameSort="Boutique"
+        />
         <RefreshButton refresh={refetch} />
       </div>
       <div className="relative">
