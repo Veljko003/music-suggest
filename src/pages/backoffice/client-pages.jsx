@@ -1,12 +1,14 @@
 import { useQuery, useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 
 import apiClient from "@/web/services/apiClient"
 import Title from "@/web/components/Title"
 import Loader from "@/web/components/Loader"
 import Button from "@/web/components/buttons/Button"
 import ConfirmationModal from "@/web/components/ConfirmationModal"
+import SortSelect from "@/web/components/SortSelect"
+import { getSortedClients } from "@/utils/sort"
 
 export const getServerSideProps = async () => {
   const data = await apiClient("/clients")
@@ -61,6 +63,7 @@ const CustomClientPages = (props) => {
   const router = useRouter()
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [clientToDelete, setClientToDelete] = useState(null)
+  const [sortOption, setSortOption] = useState("")
   const { initialData } = props
   const {
     isFetching,
@@ -94,14 +97,24 @@ const CustomClientPages = (props) => {
     setShowConfirmation(false)
     setClientToDelete(null)
   }
+  const sortedClients = useMemo(
+    () => getSortedClients(clients, sortOption),
+    [clients, sortOption]
+  )
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value)
+  }
 
   return (
     <>
       <Title title="Clients" />
+      <div className="flex flex-row justify-center mt-5">
+        <SortSelect value={sortOption} onChange={handleSortChange} />
+      </div>
       <div className="relative">
         {isFetching && <Loader />}
         <ClientsDisplayTable
-          clients={clients}
+          clients={sortedClients}
           handleClickViewPage={handleClickViewPage}
           handleDelete={handleDelete}
         />

@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from "@tanstack/react-query"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 
 import apiClient from "@/web/services/apiClient"
 import Title from "@/web/components/Title"
@@ -7,6 +7,8 @@ import Loader from "@/web/components/Loader"
 import Button from "@/web/components/buttons/Button"
 import ConfirmationModal from "@/web/components/ConfirmationModal"
 import { formatDateTimeShort } from "@/utils/formatters"
+import SortSelect from "@/web/components/SortSelect"
+import { getSortedSuggestions } from "@/utils/sort"
 
 export const getServerSideProps = async () => {
   const data = await apiClient("/suggestions")
@@ -65,6 +67,7 @@ const Suggestions = (props) => {
   const { initialData } = props
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [suggestionToDelete, setSuggestionToDelete] = useState(null)
+  const [sortOption, setSortOption] = useState("")
   const {
     isFetching,
     data: { result: suggestions },
@@ -95,14 +98,24 @@ const Suggestions = (props) => {
     setShowConfirmation(false)
     setSuggestionToDelete(null)
   }
+  const sortedSuggestions = useMemo(
+    () => getSortedSuggestions(suggestions, sortOption),
+    [suggestions, sortOption]
+  )
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value)
+  }
 
   return (
     <>
       <Title title="Suggestions" />
+      <div className="flex flex-row justify-center mt-5">
+        <SortSelect value={sortOption} onChange={handleSortChange} />
+      </div>
       <div className="relative">
         {isFetching && <Loader />}
         <SuggestionDisplayTable
-          suggestions={suggestions}
+          suggestions={sortedSuggestions}
           handleDelete={handleDelete}
         />
       </div>
