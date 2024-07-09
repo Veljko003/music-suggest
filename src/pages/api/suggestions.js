@@ -12,13 +12,14 @@ const handle = mw({
         email: nameValidator,
         title: nameValidator,
         artist: nameValidator,
-        link: nameValidator
+        link: nameValidator,
+        client: nameValidator
       }
     }),
     async ({
       res,
       input: {
-        body: { shopName, email, title, artist, link }
+        body: { shopName, email, title, artist, link, client }
       }
     }) => {
       try {
@@ -27,7 +28,8 @@ const handle = mw({
           email,
           title,
           artist,
-          link
+          link,
+          client
         })
 
         res.send({

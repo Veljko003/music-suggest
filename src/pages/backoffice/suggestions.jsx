@@ -24,6 +24,7 @@ const SuggestionDisplayTable = ({ suggestions, handleDelete }) => (
     <thead>
       <tr>
         {[
+          "Client",
           "Boutique / Espace",
           "E-mail",
           "Titre",
@@ -42,8 +43,9 @@ const SuggestionDisplayTable = ({ suggestions, handleDelete }) => (
     </thead>
     <tbody>
       {suggestions.map(
-        ({ id, shopName, email, title, artist, link, created_at }) => (
+        ({ id, shopName, email, title, artist, link, created_at, client }) => (
           <tr key={id} className="even:bg-green-100 text-center">
+            <td className="p-2">{client}</td>
             <td className="p-2">{shopName}</td>
             <td className="p-2">{email}</td>
             <td className="p-2">{title}</td>

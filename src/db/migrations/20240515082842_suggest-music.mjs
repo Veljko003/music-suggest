@@ -6,6 +6,7 @@ export const up = async (knex) => {
     table.text("title").notNullable()
     table.text("artist").notNullable()
     table.text("link").notNullable()
+    table.text("client").notNullable()
   })
 }
 

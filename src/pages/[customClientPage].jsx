@@ -17,8 +17,11 @@ const initialValues = {
 }
 const ClientPage = () => {
   const router = useRouter()
+  const client = router.query.customClientPage
+  console.log("Client:", client)
   const { mutateAsync } = useMutation({
-    mutationFn: (values) => apiClient.post("/suggestions", { ...values })
+    mutationFn: (values) =>
+      apiClient.post("/suggestions", { ...values, client })
   })
   const handleSubmit = async (values, { resetForm }) => {
     await mutateAsync(values)
