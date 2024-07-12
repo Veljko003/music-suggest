@@ -1,10 +1,9 @@
+import { useEffect, useMemo } from "react"
 import { useRouter } from "next/router"
-import { useEffect } from "react"
 
 const withAuth = (WrappedComponent) => {
   const WithAuth = (props) => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const session = { user: { id: 1, name: "Admin" } }
+    const session = useMemo(() => ({ user: { id: 1, name: "Admin" } }), [])
     const router = useRouter()
 
     useEffect(() => {
