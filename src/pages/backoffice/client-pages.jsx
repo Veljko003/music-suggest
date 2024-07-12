@@ -10,6 +10,7 @@ import ConfirmationModal from "@/web/components/ConfirmationModal"
 import SortSelect from "@/web/components/SortSelect"
 import { getSortedClients } from "@/utils/sort"
 import RefreshButton from "@/web/components/buttons/RefreshButton"
+import withAuth from "@/hoc/withAuth"
 
 export const getServerSideProps = async () => {
   const data = await apiClient("/clients")
@@ -135,4 +136,4 @@ const CustomClientPages = (props) => {
   )
 }
 
-export default CustomClientPages
+export default withAuth(CustomClientPages)

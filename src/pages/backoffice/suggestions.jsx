@@ -12,6 +12,7 @@ import { getSortedSuggestions } from "@/utils/sort"
 import RefreshButton from "@/web/components/buttons/RefreshButton"
 import FilterMenu from "@/web/components/FilterMenu"
 import Icon from "@/web/components/Icon"
+import withAuth from "@/hoc/withAuth"
 
 export const getServerSideProps = async () => {
   const data = await apiClient("/suggestions")
@@ -176,4 +177,4 @@ const Suggestions = (props) => {
   )
 }
 
-export default Suggestions
+export default withAuth(Suggestions)
