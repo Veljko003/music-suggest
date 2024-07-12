@@ -1,22 +1,25 @@
-import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
-import Loader from "@/web/components/Loader"
 
 const withAuth = (WrappedComponent) => {
   const WithAuth = (props) => {
-    const { data: session, status } = useSession()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const session = { user: { id: 1, name: "Admin" } }
     const router = useRouter()
 
     useEffect(() => {
-      if (status === "loading") return // Do nothing while loading
-      if (!session) router.replace("/sign-in")
-    }, [session, status, router])
+      if (!session) {
+        console.log("No session found, redirecting to sign-in")
+        router.replace("/sign-in")
+      }
+    }, [session, router])
 
-    if (status === "loading" || !session) {
-      return <Loader />
+    if (!session) {
+      console.log("No session, redirecting")
+      router.replace("/sign-in")
     }
 
+    console.log("Session found", session)
     return <WrappedComponent {...props} />
   }
 

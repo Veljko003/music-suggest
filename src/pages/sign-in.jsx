@@ -1,3 +1,4 @@
+import { signIn } from "next-auth/react"
 import Form from "@/web/components/forms/Form"
 import FormField from "@/web/components/forms/FormField"
 import SubmitButton from "@/web/components/buttons/SubmitButton"
@@ -8,8 +9,17 @@ const initialValues = {
   password: ""
 }
 const SignInPage = () => {
-  const handleSubmit = () => {
-    //
+  const handleSubmit = async (values) => {
+    const result = await signIn("credentials", {
+      redirect: false,
+      username: values.username,
+      password: values.password
+    })
+    if (!result.error) {
+      window.location.href = "/backoffice"
+    } else {
+      alert("Invalid credentials")
+    }
   }
 
   return (
