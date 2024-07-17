@@ -8,6 +8,7 @@ import SubmitButton from "@/web/components/buttons/SubmitButton"
 import Title from "@/web/components/Title"
 import ErrorMessage from "@/web/components/alert-messages/ErrorMessage"
 import SuccessMessage from "@/web/components/alert-messages/SuccessMessage"
+import withAuth from "@/hoc/withAuth"
 
 const initialValues = {
   clientName: "",
@@ -49,4 +50,4 @@ const CreateCustomClientPages = () => {
   )
 }
 
-export default CreateCustomClientPages
+export default withAuth(CreateCustomClientPages)

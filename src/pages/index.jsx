@@ -1,51 +1,29 @@
-import { useMutation } from "@tanstack/react-query"
+import Link from "next/link"
 
-import apiClient from "@/web/services/apiClient"
-import Form from "@/web/components/forms/Form"
-import FormField from "@/web/components/forms/FormField"
-import SubmitButton from "@/web/components/buttons/SubmitButton"
-import LinkField from "@/web/components/forms/LinkField"
-import Title from "@/web/components/Title"
+const RedirectUserContainer = ({ userType, message }) => (
+  <div className="text-center">
+    <h1 className="font-semibold text-xl">Vous êtes {userType} ?</h1>
+    <span>{message}</span>
+  </div>
+)
+const IndexPage = () => (
+  <div className="flex flex-col items-center justify-center h-screen space-y-20">
+    <h1 className="text-6xl font-semibold">
+      Suggérer la musique | MIDI-AGENCY
+    </h1>
+    <RedirectUserContainer
+      userType="client"
+      message="Alors, allez sur le lien qui vous a été envoyé par notre équipe MIDI 😊🎵"
+    />
+    <RedirectUserContainer
+      userType="admin"
+      message={
+        <Link href="/sign-in" className="hover:text-blue-700">
+          Alors, connectez-vous en cliquant ici
+        </Link>
+      }
+    />
+  </div>
+)
 
-const initialValues = {
-  shopName: "",
-  email: "",
-  title: "",
-  artist: "",
-  link: ""
-}
-const Home = () => {
-  const { mutateAsync } = useMutation({
-    mutationFn: (values) => apiClient.post("/suggestions", { ...values })
-  })
-  const handleSubmit = async (values, { resetForm }) => {
-    await mutateAsync(values)
-
-    resetForm()
-    return true
-  }
-
-  return (
-    <>
-      <Title title="A votre tour de nous suggérer un titre" />
-      <Form onSubmit={handleSubmit} initialValues={initialValues}>
-        <FormField name="shopName" type="text" label="Boutique / Espace:" />
-        <FormField
-          name="email"
-          type="email"
-          label="Contact mail (optionnel):"
-        />
-        <div className="mt-3 mb-3">
-          <FormField name="title" type="text" label="Titre:" />
-          <FormField name="artist" type="text" label="Artiste:" />
-        </div>
-
-        <LinkField name="link" label="Lien (Spotify, YouTube):" />
-
-        <SubmitButton btnLabel="Envoyer" onSubmit={handleSubmit} />
-      </Form>
-    </>
-  )
-}
-
-export default Home
+export default IndexPage
