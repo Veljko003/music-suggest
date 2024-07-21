@@ -5,8 +5,8 @@ import HeadPage from "@/web/components/HeadPage"
 
 const client = new QueryClient()
 
-const App = ({ Component, pageProps }) => (
-  <SessionProvider session={pageProps.session}>
+const App = ({ Component, pageProps: { session, ...pageProps } }) => (
+  <SessionProvider session={session}>
     <QueryClientProvider client={client}>
       <HeadPage />
       <Component {...pageProps} />
