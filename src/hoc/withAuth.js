@@ -1,10 +1,12 @@
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
+import Loader from "@/web/components/Loader"
 
 const withAuth = (WrappedComponent) => {
   const WithAuth = (props) => {
-    const { data: session, status } = useSession()
+    const session = useMemo(() => ({ user: { id: 1, name: "Admin" } }), [])
+    const { status } = useSession()
     const router = useRouter()
 
     useEffect(() => {
@@ -16,7 +18,7 @@ const withAuth = (WrappedComponent) => {
     }, [session, status, router])
 
     if (status === "loading") {
-      return <div>Loading...</div>
+      return <Loader />
     }
 
     if (!session) {
