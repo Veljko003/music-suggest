@@ -2,7 +2,6 @@ import { useQuery, useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/router"
 import { useState, useMemo } from "react"
 
-import withAuth from "@/hoc/withAuth"
 import apiClient from "@/web/services/apiClient"
 import Title from "@/web/components/Title"
 import Loader from "@/web/components/Loader"
@@ -136,4 +135,4 @@ const CustomClientPages = (props) => {
   )
 }
 
-export default withAuth(CustomClientPages)
+export default CustomClientPages

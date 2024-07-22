@@ -22,7 +22,7 @@ const data = {
   security: {
     jwt: {
       cookieName: "sessionToken",
-      secret: process.env.SECURITY__JWT__SECRET,
+      secret: process.env.NEXT_PUBLIC_SECURITY__JWT__SECRET,
       expiresIn: "2 hours",
       secure: process.env.NODE_ENV === "production"
     }

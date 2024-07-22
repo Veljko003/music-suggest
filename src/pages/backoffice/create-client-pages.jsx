@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/router"
 
-import withAuth from "@/hoc/withAuth"
 import apiClient from "@/web/services/apiClient"
 import Form from "@/web/components/forms/Form"
 import FormField from "@/web/components/forms/FormField"
@@ -50,4 +49,4 @@ const CreateCustomClientPages = () => {
   )
 }
 
-export default withAuth(CreateCustomClientPages)
+export default CreateCustomClientPages
