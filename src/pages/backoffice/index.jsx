@@ -1,4 +1,5 @@
 import CardMenu from "@/web/components/CardMenu"
+import withAuth from "@/hoc/withAuth"
 
 const BackofficePage = () => (
   <div className="flex flex-col items-center justify-center min-h-screen">
@@ -24,4 +25,4 @@ const BackofficePage = () => (
   </div>
 )
 
-export default BackofficePage
+export default withAuth(BackofficePage)
