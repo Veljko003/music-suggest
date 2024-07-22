@@ -1,32 +1,38 @@
-import { useEffect, useMemo } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import { useSession } from "@/web/components/SessionContext"
+import Loader from "@/web/components/Loader"
 
 const withAuth = (WrappedComponent) => {
-  const WithAuth = (props) => {
-    const session = useMemo(() => ({ user: { id: 1, name: "Admin" } }), [])
+  const WithAuthComponent = (props) => {
+    const { session } = useSession()
     const router = useRouter()
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
       if (!session) {
-        console.log("No session found, redirecting to sign-in")
         router.replace("/sign-in")
+      } else {
+        setLoading(false)
       }
     }, [session, router])
 
-    if (!session) {
-      console.log("No session, redirecting")
-      router.replace("/sign-in")
+    if (loading) {
+      return <Loader />
     }
 
-    console.log("Session found", session)
     return <WrappedComponent {...props} />
   }
 
-  WithAuth.displayName = `WithAuth(${
-    WrappedComponent.displayName || WrappedComponent.name || "Component"
-  })`
+  WithAuthComponent.displayName = `WithAuth(${getDisplayName(
+    WrappedComponent
+  )})`
 
-  return WithAuth
+  return WithAuthComponent
+}
+
+const getDisplayName = (WrappedComponent) => {
+  return WrappedComponent.displayName || WrappedComponent.name || "Component"
 }
 
 export default withAuth

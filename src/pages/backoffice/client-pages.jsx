@@ -10,7 +10,7 @@ import ConfirmationModal from "@/web/components/ConfirmationModal"
 import SortSelect from "@/web/components/SortSelect"
 import { getSortedClients } from "@/utils/sort"
 import RefreshButton from "@/web/components/buttons/RefreshButton"
-import withAuth from "@/hoc/withAuth"
+import Navbar from "@/web/components/Navbar"
 
 export const getServerSideProps = async () => {
   const data = await apiClient("/clients")
@@ -109,6 +109,7 @@ const CustomClientPages = (props) => {
 
   return (
     <>
+      <Navbar />
       <Title title="Clients" />
       <div className="flex flex-row justify-center mt-5">
         <SortSelect
@@ -136,4 +137,4 @@ const CustomClientPages = (props) => {
   )
 }
 
-export default withAuth(CustomClientPages)
+export default CustomClientPages
