@@ -8,6 +8,7 @@ import SubmitButton from "@/web/components/buttons/SubmitButton"
 import Title from "@/web/components/Title"
 import ErrorMessage from "@/web/components/alert-messages/ErrorMessage"
 import SuccessMessage from "@/web/components/alert-messages/SuccessMessage"
+import Navbar from "@/web/components/Navbar"
 
 const initialValues = {
   clientName: "",
@@ -33,6 +34,7 @@ const CreateCustomClientPages = () => {
 
   return (
     <>
+      <Navbar />
       <Title title="Créer la page client personnalisées" />
       <ErrorMessage error={error} />
       {isSuccess && (

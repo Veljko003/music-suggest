@@ -7,11 +7,6 @@ const BackofficePage = () => (
     <p className="text-lg mb-4">Gérer les suggestions et pages clients</p>
     <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <CardMenu
-        title="Liste des suggestions"
-        description="Visualiser et supprimer des suggestions"
-        link="/backoffice/suggestions"
-      />
-      <CardMenu
         title="Créer des pages client"
         description="Créer des pages personnalisées pour différents clients."
         link="/backoffice/create-client-pages"
@@ -20,6 +15,11 @@ const BackofficePage = () => (
         title="Pages client personnalisées"
         description="Visualiser et gérer des pages personnalisées pour différents clients."
         link="/backoffice/client-pages"
+      />
+      <CardMenu
+        title="Liste des suggestions"
+        description="Visualiser et supprimer des suggestions"
+        link="/backoffice/suggestions"
       />
     </div>
   </div>

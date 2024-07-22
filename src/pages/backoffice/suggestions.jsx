@@ -12,6 +12,7 @@ import { getSortedSuggestions } from "@/utils/sort"
 import RefreshButton from "@/web/components/buttons/RefreshButton"
 import FilterMenu from "@/web/components/FilterMenu"
 import Icon from "@/web/components/Icon"
+import Navbar from "@/web/components/Navbar"
 
 export const getServerSideProps = async () => {
   const data = await apiClient("/suggestions")
@@ -137,6 +138,7 @@ const Suggestions = (props) => {
 
   return (
     <>
+      <Navbar />
       <Title title="Suggestions" />
       <div className="flex flex-row justify-center mt-5">
         <Button
