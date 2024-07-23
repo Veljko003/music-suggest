@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { CldUploadButton } from "next-cloudinary"
+import Image from "next/image"
 
 import apiClient from "@/web/services/apiClient"
 import Form from "@/web/components/forms/Form"
@@ -62,6 +63,11 @@ const CreateCustomClientPages = () => {
             className="w-[300px] rounded-md p-2 border-[1px] border-solid border-slate-800 hover:bg-stone-100">
             Télécharger l&apos;image
           </CldUploadButton>
+          {image && (
+            <div className="mt-2">
+              <Image src={image} alt="Uploaded Image" width={100} height={50} />
+            </div>
+          )}
         </div>
         <SubmitButton btnLabel="Créer la page client" onSubmit={handleSubmit} />
       </Form>
