@@ -1,5 +1,8 @@
 import { useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/router"
+import { useState } from "react"
+import { CldUploadButton } from "next-cloudinary"
+import Image from "next/image"
 
 import apiClient from "@/web/services/apiClient"
 import Form from "@/web/components/forms/Form"
@@ -12,15 +15,18 @@ import Navbar from "@/web/components/Navbar"
 
 const initialValues = {
   clientName: "",
-  backgroundColor: ""
+  backgroundImage: null
 }
 const CreateCustomClientPages = () => {
   const router = useRouter()
+  const [image, setImage] = useState(null)
   const { mutateAsync, isSuccess, error } = useMutation({
-    mutationFn: (values) => apiClient.post("/clients", { ...values })
+    mutationFn: async (values) => {
+      return apiClient.post("/clients", values)
+    }
   })
   const handleSubmit = async (values, { resetForm }) => {
-    await mutateAsync(values)
+    await mutateAsync({ ...values, backgroundImage: image })
 
     resetForm()
     return true
@@ -30,6 +36,9 @@ const CreateCustomClientPages = () => {
     setTimeout(() => {
       router.push("/backoffice/client-pages")
     }, 3000)
+  }
+  const handleUpload = (result) => {
+    setImage(result.info.secure_url)
   }
 
   return (
@@ -44,7 +53,28 @@ const CreateCustomClientPages = () => {
       )}
       <Form onSubmit={handleSubmit} initialValues={initialValues}>
         <FormField name="clientName" type="text" label="Client:" />
-        <FormField name="backgroundColor" type="color" label="Fond d'écran:" />
+        <div className="flex flex-col gap-2 mb-4 items-start">
+          <span className="font-semibold text-lg">
+            Image de fond d&apos;écran:
+          </span>
+          <CldUploadButton
+            uploadPreset="client_page_upload"
+            onSuccess={handleUpload}
+            options={{ resourceType: "image" }}
+            className="w-[300px] rounded-md p-2 border-[1px] border-solid border-slate-800 hover:bg-stone-100">
+            Télécharger l&apos;image
+          </CldUploadButton>
+          {image && (
+            <div className="mt-2">
+              <Image
+                src={image}
+                alt="Image téléchargée"
+                width={100}
+                height={50}
+              />
+            </div>
+          )}
+        </div>
         <SubmitButton btnLabel="Créer la page client" onSubmit={handleSubmit} />
       </Form>
     </>
