@@ -60,12 +60,18 @@ const CreateCustomClientPages = () => {
           <CldUploadButton
             uploadPreset="client_page_upload"
             onSuccess={handleUpload}
+            options={{ resourceType: "image" }}
             className="w-[300px] rounded-md p-2 border-[1px] border-solid border-slate-800 hover:bg-stone-100">
             Télécharger l&apos;image
           </CldUploadButton>
           {image && (
             <div className="mt-2">
-              <Image src={image} alt="Uploaded Image" width={100} height={50} />
+              <Image
+                src={image}
+                alt="Image téléchargée"
+                width={100}
+                height={50}
+              />
             </div>
           )}
         </div>
