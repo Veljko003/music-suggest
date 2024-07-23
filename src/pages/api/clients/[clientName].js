@@ -41,7 +41,10 @@ const handle = mw({
         .findOne({ clientName })
         .throwIfNotFound()
 
-      res.send(client)
+      res.send({
+        clientName: client.clientName,
+        backgroundImage: client.backgroundImage
+      })
     }
   ]
 })

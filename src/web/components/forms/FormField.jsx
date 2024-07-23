@@ -8,7 +8,7 @@ const FormField = ({ name, label, ...otherProps }) => {
     <div className="flex flex-col gap-2">
       <span className="font-semibold text-lg">{label}</span>
       <input
-        className="border-2 rounded-md p-1 w-[300px]"
+        className="border-2 rounded-md p-1 w-[300px] border-slate-400"
         {...field}
         {...otherProps}
       />

@@ -45,7 +45,7 @@ const ClientsDisplayTable = ({
           <td className="p-2">
             <Button
               btnLabel="Voir la page"
-              onClick={handleClickViewPage(clientName)}
+              onClick={handleClickViewPage(clientName, backgroundImage)}
             />
           </td>
           <td className="p-2">
@@ -80,8 +80,11 @@ const CustomClientPages = (props) => {
   const { mutateAsync: deleteClient } = useMutation({
     mutationFn: (clientName) => apiClient.delete(`clients/${clientName}`)
   })
-  const handleClickViewPage = (clientName) => () => {
-    router.push(`/${clientName}`)
+  const handleClickViewPage = (clientName, backgroundImage) => () => {
+    router.push({
+      pathname: `/${clientName}`,
+      query: { backgroundImage }
+    })
   }
   const handleDelete = (clientName) => {
     setClientToDelete(clientName)
