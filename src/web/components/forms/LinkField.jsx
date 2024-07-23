@@ -7,7 +7,7 @@ const LinkField = ({ ...otherProps }) => (
       icon="link"
       className="absolute top-3/4 right-2 transform -translate-y-1/2 w-6"
     />
-    <FormField type="text" {...otherProps} />
+    <FormField type="text" className="pr-10" {...otherProps} />
   </div>
 )
 

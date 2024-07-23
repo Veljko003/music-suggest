@@ -26,7 +26,7 @@ const SignInPage = () => {
       saveSessionToken(token)
       router.push("/backoffice")
     } else {
-      setError("Invalid credentials. Please try again.")
+      setError("Identifiants non valides. Veuillez réessayer.")
     }
   }
 
