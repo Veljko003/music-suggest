@@ -7,7 +7,8 @@ import {
 } from "@heroicons/react/24/solid"
 import {
   XMarkIcon,
-  AdjustmentsHorizontalIcon
+  AdjustmentsHorizontalIcon,
+  Bars3Icon
 } from "@heroicons/react/24/outline"
 
 const icons = {
@@ -16,7 +17,8 @@ const icons = {
   success: CheckCircleIcon,
   refresh: ArrowPathIcon,
   x: XMarkIcon,
-  filter: AdjustmentsHorizontalIcon
+  filter: AdjustmentsHorizontalIcon,
+  hamburger: Bars3Icon
 }
 const Icon = (props) => {
   const { icon = "", className, ...otherProps } = props
